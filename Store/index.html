@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mobile Store</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #eae9e9;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+        }
+
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .card {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin: 10px;
+            width: 300px;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        .card-title {
+            font-size: 24px;
+            margin: 10px 0;
+        }
+
+        .card-text {
+            font-size: 20px;
+            color: #555;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            margin-top: 10px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            margin-bottom: 10px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .cart-item img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+        }
+
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+        }
+
+        .quantity-controls button {
+            margin: 0 5px;
+            padding: 5px 10px;
+            background-color: #f0f0f0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .quantity-controls button:hover {
+            background-color: #ddd;
+        }
+
+        .total {
+            font-size: 24px;
+            font-weight: bold;
+            text-align: right;
+            margin-top: 20px;
+        }
+
+        #save-cart {
+            margin-top: 20px;
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            float: right;
+        }
+
+        #save-cart:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="row">
+            <div class="card">
+                <img src="Apple-iPhone-13-featured-image-packshot-review-1024x691.jpg" alt="iPhone 13">
+                <div class="card-body">
+                    <h5 class="card-title">iPhone 13</h5>
+                    <h6 class="card-text">900 JD</h6>
+                    <button class="btn add-to-cart" data-id="1" data-name="iPhone 13" data-price="900">Add to Cart</button>
+                </div>
+            </div>
+            <div class="card">
+                <img src="istockphoto-860853774-612x612.jpg" alt="Headphones">
+                <div class="card-body">
+                    <h5 class="card-title">Wireless Headphones</h5>
+                    <h6 class="card-text">150 JD</h6>
+                    <button class="btn add-to-cart" data-id="2" data-name="Wireless Headphones" data-price="150">Add to Cart</button>
+                </div>
+            </div>
+            <div class="card">
+                <img src="istockphoto-153065264-612x612.jpg" alt="Keyboard">
+                <div class="card-body">
+                    <h5 class="card-title">Mechanical Keyboard</h5>
+                    <h6 class="card-text">60 JD</h6>
+                    <button class="btn add-to-cart" data-id="3" data-name="Mechanical Keyboard" data-price="60">Add to Cart</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="cart-items"></div>
+
+        <div class="total">
+            Total: <span id="cart-total">0</span> JD
+        </div>
+        <button id="save-cart">Save</button>
+    </div>
+
+    <script>
+        const products = [
+    { id: 1, name: 'iPhone 13', price: 900, img: 'Apple-iPhone-13-featured-image-packshot-review-1024x691.jpg' },
+    { id: 2, name: 'Wireless Headphones', price: 150, img: 'istockphoto-860853774-612x612.jpg' },
+    { id: 3, name: 'Mechanical Keyboard', price: 60, img: 'istockphoto-153065264-612x612.jpg' }
+];
+
+let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+function updateCart() {
+    const cartItems = document.getElementById('cart-items');
+    cartItems.innerHTML = '';
+    let total = 0;
+
+    cart.forEach(item => {
+        const product = products.find(p => p.id === item.id);
+        total += product.price * item.quantity;
+
+        const cartItem = document.createElement('div');
+        cartItem.className = 'cart-item';
+        cartItem.innerHTML = `
+            <img src="${product.img}" alt="${product.name}">
+            <span>${product.name}</span>
+            <div class="quantity-controls">
+                <button class="decrease-quantity" data-id="${item.id}">-</button>
+                <span>${item.quantity}</span>
+                <button class="increase-quantity" data-id="${item.id}">+</button>
+            </div>
+            <span>${product.price * item.quantity} JD</span>
+            <button class="remove-from-cart" data-id="${item.id}">X</button>
+        `;
+        cartItems.appendChild(cartItem);
+    });
+
+    document.getElementById('cart-total').textContent = total;
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+    products.forEach(product => {
+        const button = document.querySelector(`button[data-id="${product.id}"]`);
+        if (button) {
+            button.click();
+        }
+    });
+});
+
+document.querySelectorAll('.add-to-cart').forEach(button => {
+    button.addEventListener('click', function () {
+        const productId = parseInt(this.getAttribute('data-id'));
+        const product = cart.find(item => item.id === productId);
+        if (product) {
+            product.quantity++;
+        } else {
+            cart.push({ id: productId, quantity: 1 });
+        }
+        updateCart();
+    });
+});
+
+document.getElementById('cart-items').addEventListener('click', function (e) {
+    const target = e.target;
+    const productId = parseInt(target.getAttribute('data-id'));
+    const product = cart.find(item => item.id === productId);
+
+    if (target.classList.contains('remove-from-cart')) {
+        cart = cart.filter(item => item.id !== productId);
+    } else if (target.classList.contains('increase-quantity')) {
+        product.quantity++;
+    } else if (target.classList.contains('decrease-quantity')) {
+        product.quantity = Math.max(1, product.quantity - 1);
+    }
+    updateCart();
+});
+
+document.getElementById('save-cart').addEventListener('click', function () {
+    localStorage.setItem('cart', JSON.stringify(cart));
+    alert('Cart saved!');
+});
+
+updateCart();
+
+    </script>
+</body>
+
+</html>

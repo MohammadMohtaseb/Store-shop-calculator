@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Calculator</title>
+</head>
+<body>
+    <div class="cont">
+        <div class="div-screen" id="screen">0</div>
+        <div class="div-1">1</div>
+        <div class="div-2">2</div>
+        <div class="div-3">3</div>
+        <div class="div-pluse">+</div>
+        <div class="div-4">4</div>
+        <div class="div-5">5</div>
+        <div class="div-6">6</div>
+        <div class="div-min">-</div>
+        <div class="div-7">7</div>
+        <div class="div-8">8</div>
+        <div class="div-9">9</div>
+        <div class="div-mul">*</div>
+        <div class="div-c">C</div>
+        <div class="div-0">0</div>
+        <div class="div-eq">=</div>
+        <div class="div-slash">/</div>
+    </div> 
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+    const screen = document.getElementById("screen");
+    const buttons = document.querySelectorAll(".cont div");
+
+    let screenValue = "";
+
+    function updateScreen() {
+        screen.textContent = screenValue;
+    }
+
+    buttons.forEach(button => {
+        button.addEventListener("click", function() {
+            const buttonText = this.textContent;
+            if (buttonText === "C") {
+                screenValue = "";
+            } else if (buttonText === "=") {
+                try {
+                    screenValue = eval(screenValue);
+                } catch (error) {
+                    screenValue = "Error";
+                }
+            } else {
+                if (screenValue === "Error") {
+                    screenValue = buttonText;
+                } else {
+                    screenValue += buttonText;
+                }
+            }
+            updateScreen();
+        });
+    });
+});
+
+    </script>
+</body>
+</html>

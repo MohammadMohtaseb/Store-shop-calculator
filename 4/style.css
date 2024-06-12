@@ -1,0 +1,71 @@
+body {
+    background-color: #a8bf7e; 
+}
+.cont {
+    display: grid;
+    width: 460px;
+    height: 70vh;
+    margin: auto;
+    margin-top: 20px;
+    gap: 3px;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    background-color: #a0d0ea;
+    font-size: 30px;
+    color: #5f657c;
+}
+div {
+    text-align: center;
+    cursor: pointer;  /* Add this line to make the cursor a pointer for all buttons */
+}
+.div-screen {
+    background-color: white;
+    margin: 10px;
+    grid-area: 1/1/span 1/span 4;
+    box-shadow: 3px 3px 4px black;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 10px;
+    cursor: default;  /* Keep the default cursor for the screen */
+}
+.div-1, .div-2, .div-3, .div-4, .div-5, .div-6, .div-7, .div-8, .div-9, .div-0 {
+    background-color: white;
+    margin: 10px;
+    display: grid;
+    align-items: center;
+    box-shadow: 3px 3px 3px black;
+}
+.div-1:hover, .div-2:hover, .div-3:hover, .div-4:hover, .div-5:hover, .div-6:hover, .div-7:hover, .div-8:hover, .div-9:hover, .div-0:hover {
+    background-color: #d0e6ff;
+}
+.div-pluse, .div-min, .div-mul, .div-slash {
+    background-color: #efff93;
+    margin: 10px;
+    display: grid;
+    align-items: center;
+    box-shadow: 3px 3px 3px black;
+}
+.div-pluse:hover, .div-min:hover, .div-mul:hover, .div-slash:hover {
+    background-color: #d0ffb3;
+}
+.div-c {
+    background-color: #fe9fa9;
+    margin: 10px;
+    display: grid;
+    align-items: center;
+    box-shadow: 3px 3px 3px black;
+}
+.div-c:hover {
+    background-color: #ffb3b9;
+}
+.div-eq {
+    background-color: white;
+    margin: 10px;
+    display: grid;
+    align-items: center;
+    box-shadow: 3px 3px 3px black;
+}
+.div-eq:hover {
+    background-color: #ffefd5;
+}
